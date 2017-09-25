@@ -79,13 +79,13 @@ class Calibration():
         ''' Return the current screen orientation '''
         xrandr = subprocess.Popen(['xrandr', '-q', '--verbose'], stdout=subprocess.PIPE)
         for line in xrandr.stdout:
-            if "eDP1" in line:
+            if "primary" in line:
                 orientation = line.split()[5]
                 if '(' in orientation:
                     return('normal')
                 else:
                     return(orientation)
-        print('Warning! Unable to detect screen orientation.')
+        log.warning('Warning! Unable to detect screen orientation.')
         return('normal')
 
     def get_calibration(self):
@@ -104,7 +104,7 @@ class Calibration():
             if not os.path.isdir(os.path.dirname(SETTINGS)):
                 os.makedirs(os.path.dirname(SETTINGS))
         except Exception, err:
-            print(err)
+            log.error(err)
         json_data = json.dumps(self.calibration,
                                sort_keys=True,
                                indent=4,
@@ -136,7 +136,7 @@ class Calibration():
         reset_command = 'xsetwacom --set "{device}" ResetArea'.format(device=self.device)
         os.system(reset_command)
         cal = self.get_calibration()
-        print('Wacom calibration set to {cal} for "{orientation}" screen orientation'.format(cal=cal,
+        log.info('Wacom calibration set to {cal} for "{orientation}" screen orientation'.format(cal=cal,
                                                                                              orientation=self.orientation))
         self.calibration[self.orientation] = cal
         self.save_calibration()
@@ -144,8 +144,8 @@ class Calibration():
     def calibrate(self):
         ''' Use xinput_calibrate to calibrate the screen '''
         old_cal = self.calibration[self.orientation]
-        print('Calibrating screen for "{orientation}" screen orientation'.format(orientation=self.orientation))
-        print('Old calibration: {old}'.format(old=old_cal))
+        log.info('Calibrating screen for "{orientation}" screen orientation'.format(orientation=self.orientation))
+        log.info('Old calibration: {old}'.format(old=old_cal))
         xinput_calibrator = subprocess.Popen(['xinput_calibrator', '--device', self.device], stdout=subprocess.PIPE)
         #xinput_calibrator = subprocess.Popen(['xinput_calibrator', '--device', self.device,
         #                                      '--precalib', str(old_cal[0]), str(old_cal[2]), str(old_cal[1]), str(old_cal[3])],
@@ -167,8 +167,8 @@ class Calibration():
         #    cal[1] = normal_cal[0]
         #    cal[2] = normal_cal[3]
         #    cal[3] = normal_cal[2]
-        print('New calibration: {new}'.format(new=cal))
-        print('Calibration saved to {settings}'.format(settings=SETTINGS))
+        log.info('New calibration: {new}'.format(new=cal))
+        log.info('Calibration saved to {settings}'.format(settings=SETTINGS))
         self.calibration[self.orientation] = cal
         self.set_calibration()
         self.save_calibration()
@@ -460,13 +460,13 @@ class Daemon(QtCore.QObject):
                 mode = "laptop"
             self.mode = mode
         if mode == "tablet":
-            print(" *** TABLET ***")
+            log.info(" *** TABLET ***")
             self.nipple_switch(status = False) 
             self.touchpad_switch(status = False)
             self.locked = False
             os.system('notify-send "Tablet Mode"')
         elif mode == "laptop":
-            print(" *** LAPTOP ***")
+            log.info(" *** LAPTOP ***")
             self.locked = True
             self.touchpad_switch(status = True)
             self.nipple_switch(status = True)
@@ -501,7 +501,7 @@ class Daemon(QtCore.QObject):
                 log.info("Touch screen enabled")
                 os.system('notify-send "Touch Screen Enabled"')
         elif mode == "calibrate":
-            print(" *** Calibrating Wacom Pen *** ")
+            log.info(" *** Calibrating Wacom Pen *** ")
             self.calibrate()
         else:
             log.error("Unknown mode \"{mode}\" requested".format(mode = mode))
