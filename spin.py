@@ -34,7 +34,7 @@
 """
 
 name    = "spin"
-version = "2015-04-30T0256Z"
+version = "0.3.0"
 
 
 import os
