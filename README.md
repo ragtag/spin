@@ -23,8 +23,22 @@ spin.py requires the following packages to run:
 - xserver-xorg-input-wacom
 - xinput-calibrator
 
+Run this command to install them on Ubuntu 16.04 and 17.10
+
+```Bash
+sudo apt-get python-qt4 python-numpy xinput x11-xserver-utils xserver-xorg-input-wacom xinput-calibrator
+```
 
 ## installation
+
+### installing for a single user
+The easiest way to install spin.py is simply to run.
+
+```Bash
+python install.py
+```
+
+This will install spin.py to ~/.local/bin, and the .desktop files and icons to ~/.local/share, so will only work for the current user.
 
 ### building and installing a .deb package
 This requires the dpkg-deb and make commands to be installed.
@@ -53,7 +67,7 @@ If you also want to use the desktop application icons, you can put these in pack
 
 ## quick start
 
-If run spin.py without any parameters, it does nothing. To start it run:
+If you run spin.py without any parameters, it does nothing. To start it run:
 
 ```Bash
 spin.py --daemon
@@ -83,9 +97,9 @@ This toggles the display rotation lock when in Tablet mode. You can also use the
 spin.py --toggletouch
 ```
 
-Even though spin.py disables the touch screen when the pen is near the screen, the touch interface sometimes gets in the way when you're drawing or taking notes, and lift the pen a bit to high with your hand still resting on the screen. This option lets you toggle the touch screen on and off.
+Even though spin.py disables the touch screen when the pen is near the screen, the touch interface sometimes gets in the way when you're drawing or taking notes, and you lift the pen a bit too high with your hand still resting on the screen. This option lets you toggle the touch screen on and off completely.
 
-In addition there are three applications launchers, which can be found in /usr/share/applications/Yoga Spin - *, that can run these commands. You can drag these to the Unity Launcher, to quickly toggle between modes. Note that the Toggle Mode launcher has a right click menu when placed in the Unity dock, where you can access all the other options, in case you don't want to crowd your launcher with Yoga Spin icons.
+In addition there are three applications launchers which can run these commands. You can drag these to the Unity or GNOME Launcher, to quickly toggle between modes. Note that in Unity the Toggle Mode launcher has a right click menu when placed in the Unity dock, where you can access all the other options, in case you don't want to crowd your launcher with Yoga Spin icons (this doesn't work in GNOME for some reason).
 
 For debugging, you can run spin.py with different log levels (1=debug, 2=info, 3=warning, 4=error, 5=critical):
 
@@ -169,7 +183,7 @@ Once you're happy with your manual calibration, enter them into your ~/.config/s
 
 This utility has been tested on the following operating systems:
 
-- Ubuntu 15.10 and 16.04
+- Ubuntu 15.10, 16.04 an 17.10
 
 This utility has been tested on the following computer models:
 
