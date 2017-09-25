@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 """
 ################################################################################
@@ -80,7 +80,11 @@ class Calibration():
         xrandr = subprocess.Popen(['xrandr', '-q', '--verbose'], stdout=subprocess.PIPE)
         for line in xrandr.stdout:
             if "eDP1" in line:
-                return( line.split()[5])
+                orientation = line.split()[5]
+                if '(' in orientation:
+                    return('normal')
+                else:
+                    return(orientation)
         print('Warning! Unable to detect screen orientation.')
         return('normal')
 
@@ -382,6 +386,13 @@ class Daemon(QtCore.QObject):
         if mode == "togglelock":
             self.acpi_queue.get()  # The rotation lock key triggers acpi twice, ignoring the second one.
             self.engage_mode('togglelock')
+        elif mode == "display_position_change":
+            self.engage_mode("toggle")
+            log.info("Display mode changed")
+        elif mode == "tablet_mode_change":
+            # Even though the event toggles twice, in the end it works out
+            self.engage_mode("toggle")
+            log.info("Tablet mode changed")
         else:
             log.error("Triggered acpi_listen with unknwon mode {0}".format(mode))
 
@@ -523,13 +534,19 @@ def get_inputs():
     ).communicate()[0]
     devices_and_keyphrases = {
         "touchscreen": ["SYNAPTICS Synaptics Touch Digitizer V04",
-                        "ELAN Touchscreen"],
+                        "ELAN Touchscreen",
+                        "Wacom Co.,Ltd. Pen and multitouch sensor Finger touch"],
         "touchpad":    ["PS/2 Synaptics TouchPad",
-                        "SynPS/2 Synaptics TouchPad"],
-        "nipple":      ["TPPS/2 IBM TrackPoint"],
-        "stylus":      ["Wacom ISDv4 EC Pen stylus"]
+                        "SynPS/2 Synaptics TouchPad",
+                        "ETPS/2 Elantech Touchpad"],
+        "nipple":      ["TPPS/2 IBM TrackPoint",
+                        "ETPS/2 Elantech TrackPoint"],
+        "stylus":      ["Wacom ISDv4 EC Pen stylus",
+                        "Wacom Co.,Ltd. Pen and multitouch sensor Pen stylus",
+                        "Wacom Co.,Ltd. Pen and multitouch sensor Pen eraser"]
     }
     device_names = {}
+    # TODO: allow for multiple devices of each type
     for device, keyphrases in devices_and_keyphrases.iteritems():
         for keyphrase in keyphrases:
             if keyphrase in input_devices:
@@ -594,11 +611,15 @@ def acpi_sensor(acpi_queue):
         log.debug("ACPI event: {0}".format(event_ACPI))
         display_position_event = "ibm/hotkey LEN0068:00 00000080 000060c0\n"
         rotation_lock_event = "ibm/hotkey LEN0068:00 00000080 00006020\n"
+        tablet_mode_event = " PNP0C14:04 000000b0 00000000\n"
         if event_ACPI == rotation_lock_event:
             acpi_queue.put("togglelock")
         elif event_ACPI == display_position_event:
             log.info("Display position changed. Event not implemented.")
             acpi_queue.put("display_position_change")
+        elif event_ACPI == tablet_mode_event:
+            log.info("Tablet mode changed.")
+            acpi_queue.put("tablet_mode_change")
         else:
             log.info("Unknown acpi event triggered: {0}".format(event_ACPI))
             acpi_queue.put("unknown")
