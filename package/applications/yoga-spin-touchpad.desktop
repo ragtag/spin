@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Toggle Touchpad and Nipple
+Exec=toggle_touchpad.sh
+Terminal=false
+Type=Application
+Icon=yoga-spin-touch

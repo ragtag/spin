@@ -1,5 +1,9 @@
 # spin
 
+UPDATE: I've added a couple of scripts for use with Ubuntu 17.10 GNOME (running X, not Wayland), as most of what spin.py does works out of the box there, except for palm rejection, and disabling the touchpad and nipple when in tablet mode. The palmrejection.py script takes care of the palmrejection, while the toggle_touchpad.sh toggles the touchpad and nipple on and off. There is a .desktop file for this too, if you want to make it more easily accessible. Neither of these are in the install file, so need to be installed manually. You don't need spin.py on Ubuntu 17.10.
+
+NOTE! This does not work with Wayland, as it switched to using libinpuy, though much of what spin.py provides, such as screen rotation will work out of the box on never distros running Wayland. In Ubuntu 17.10 Wayland, palm rejection and disabling of the touchpad and nipple, does not work in tablet mode.
+
 a small utily for toggling between laptop and tablet mode on the ThinkPad Yoga 12.
 
 It includes the following features:
