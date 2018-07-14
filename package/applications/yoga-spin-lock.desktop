@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=Yoga Spin - Toggle Rotation Lock
-Exec=spin.py --rotatelock
-Terminal=false
-Type=Application
-Icon=yoga-spin-lock
