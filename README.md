@@ -3,7 +3,7 @@
 a small utily for enabling palm rejection on your ThinkPad Yoga 12.
 
 NOTE! This does not work with Wayland, as it switched to using libinput and the script depends on xinput
-
+NOTE! If you're running Ubuntu 16.04, you should look into using v0.3.0 of spin.
 
 ## installation
 
