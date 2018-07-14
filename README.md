@@ -1,28 +1,28 @@
 # spin
 
-NOTE! This does not work with Wayland, as it switched to using libinpuy, though much of what spin.py provides, such as screen rotation will work out of the box on never distros running Wayland. In Ubuntu 17.10 Wayland, palm rejection and disabling of the touchpad and nipple, does not work in tablet mode.
+NOTE! This does not work with Wayland, as it switched to using libinpuy.
 
-a small utily for getting the most out of your ThinkPad Yoga 12.
+a small utily for enabling palm rejection on your ThinkPad Yoga 12.
 
-It includes the following features:
-- Palm rejection when using the Wacom stylus (palmrejection.py)
-- Tool for toggling the touchpad on and off (toggle_touchpad.sh)
 
 ## installation
 
-### installing for a single user
-Copy palmrejection.py and toggle_touchpad.sh to PATH
+Start by going to the Software Center, and install Touchpad Indicator. This will let you disable the touchpad and touchpoint from a drop down menu in the upper right hand corner, which is needed when the laptop is in tablet mode.
 
+In the command line enter:
 ```Bash
-sudo cp palmrejection.py /usr/local/bin/.
-sudo cp toggle_touchpad.sh /usr/local/bin/.
-mkdir -p ~/.local/share/applications
-mkdir -p ~/.local/share/icons
-cp yoga-spin-mode.desktop ~/.local/share/applications/.
-cp yoga-spin-mode.svg ~/.local/share/icons/.
+sudo cp palmrejection /usr/local/bin/.
+```
+This will install palmrejection to path.
+
+Next we add the Palm Rejection to autostart for the current user:
+```Bash
+mkdir -p ~/.config/autostart
+cp 'Palm Rejection.desktop' ~/.config/autostart/.
 ````
+You can do this for every user that uses the computer.
 
-
+The next time you log in, palmrejection should work.
 
 ## compatibility
 
@@ -42,7 +42,7 @@ There is evidence that it does not run with full functionality on the ThinkPad Y
 
 ## about this fork
 
-This is a fork of wdbm/spin, but versions after 0.3.0 of spin have very little left of the original code as Ubuntu 18.04 has implemented support for almost everything that spin.py used to do, except palm rejection and dissabling the touchpad.
+This is a fork of wdbm/spin, but versions after 0.3.0 of spin have very little left of the original code as Ubuntu 18.04 has implemented support for almost everything that spin.py used to do, except palm rejection.
 
 Known issues:
 

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Toggle Touchpad
+Exec=toggletouchpad
+Terminal=false
+Type=Application
+Icon=toggletouchpad

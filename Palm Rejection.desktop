@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Palm Rejection
+Exec=palmrejection
+Terminal=false
+Type=Application
+Icon=palmrejection
