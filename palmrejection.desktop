@@ -4,3 +4,4 @@ Exec=palmrejection
 Terminal=false
 Type=Application
 Icon=palmrejection
+Comment=Disable touch screen when pen is near screen

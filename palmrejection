@@ -9,9 +9,6 @@
 #                                                                              #
 # LICENCE INFORMATION                                                          #
 #                                                                              #
-# The program spin provides an interface for control of the usage modes of     #
-# laptop-tablet and similar computer interface devices.                        #
-#                                                                              #
 # copyright (C) 2013 William Breaden Madden                                    #
 #                                                                              #
 # This software is released under the terms of the GNU General Public License  #
@@ -124,7 +121,7 @@ class Palmrejection():
         sys.exit(0)
         
     def close_event(self, event):
-        log.info("Terminating Yoga Spin Daemon")
+        log.info("Terminating Palm Rejection Daemon")
         self.stylus_proximity_process.terminate()
 
 
@@ -140,11 +137,6 @@ def get_inputs():
         "touchscreen": ["SYNAPTICS Synaptics Touch Digitizer V04",
                         "ELAN Touchscreen",
                         "Wacom Co.,Ltd. Pen and multitouch sensor Finger touch"],
-        "touchpad":    ["PS/2 Synaptics TouchPad",
-                        "SynPS/2 Synaptics TouchPad",
-                        "ETPS/2 Elantech Touchpad"],
-        "nipple":      ["TPPS/2 IBM TrackPoint",
-                        "ETPS/2 Elantech TrackPoint"],
         "stylus":      ["Wacom ISDv4 EC Pen stylus",
                         "Wacom Co.,Ltd. Pen and multitouch sensor Pen stylus",
                         "Wacom Co.,Ltd. Pen and multitouch sensor Pen eraser"]

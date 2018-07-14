@@ -1,8 +1,8 @@
 # spin
 
-NOTE! This does not work with Wayland, as it switched to using libinpuy.
-
 a small utily for enabling palm rejection on your ThinkPad Yoga 12.
+
+NOTE! This does not work with Wayland, as it switched to using libinput and the script depends on xinput
 
 
 ## installation
@@ -18,11 +18,18 @@ This will install palmrejection to path.
 Next we add the Palm Rejection to autostart for the current user:
 ```Bash
 mkdir -p ~/.config/autostart
-cp 'Palm Rejection.desktop' ~/.config/autostart/.
+cp palmrejection.desktop ~/.config/autostart/.
 ````
-You can do this for every user that uses the computer.
+You need to do this for every user that uses the computer. The next time you log in, palmrejection should work.
 
-The next time you log in, palmrejection should work.
+
+## debugging
+
+You can run palmrejection manually in debug mode by running:
+```Bash
+palmrejection --loglevel 1
+```
+
 
 ## compatibility
 
@@ -37,15 +44,9 @@ This utility has been tested on the following computer models:
 
 It should work on the ThinkPad S1 Yoga, but I've not tested this fork with it.
 
-There is evidence that it does not run with full functionality on the ThinkPad Yoga 14.
+There is evidence that v0.3.0 and earlier does not run with full functionality on the ThinkPad Yoga 14, I have not tested it with this one.
 
 
 ## about this fork
 
-This is a fork of wdbm/spin, but versions after 0.3.0 of spin have very little left of the original code as Ubuntu 18.04 has implemented support for almost everything that spin.py used to do, except palm rejection.
-
-Known issues:
-
-- It does not survive a suspend correctly. Some features, such as the palm rejection still work after a suspend, while others, such as toggling modes, do not.
-- I've yet to get the display position detector to differentiate when going from tent mode, to tablet or laptop mode, so am currently unable to use it to automatically switch between tablet and laptop modes. It's not ideal, and I've posted about this upstream to the systemd folks, so hopefully we'll have this fully automated some day. If anyone has a solution to this, I would love to hear from you.
-
+This is a fork of wdbm/spin, but versions after v0.3.0 have very little left of the original spin code as Ubuntu 18.04 has implemented support for almost everything that spin.py used to do, except palm rejection. So this can more or less be considered a rewrite.
